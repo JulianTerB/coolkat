@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><!-- SITE_TITLE --></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles */
+        :root {
+            --primary-color: #1b9ec6;
+            --secondary-color: #2e2a75;
+            --tertiary-color: #6f42c9;
+            --base-color: #232529;
+            --contrast-color: #ffffff;
+            --focus-ring-color: rgba(27, 158, 198, 0.5);
+            --texture-color: rgba(255, 255, 255, 0.025);
+            --texture-size: clamp(16px, 2vw, 24px);
+            --dot-size: clamp(1.5px, 0.2vw, 2.5px);
+            --texture-overlay: rgba(0, 0, 0, 0.3);
+        }
+
+        html {
+            min-height: 100vh;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--base-color);
+            background-image: 
+                radial-gradient(var(--texture-color) var(--dot-size), transparent calc(var(--dot-size) + 1px)),
+                radial-gradient(var(--texture-color) var(--dot-size), transparent calc(var(--dot-size) + 1px)),
+                linear-gradient(to bottom right, 
+                    var(--texture-overlay),
+                    transparent 60%),
+                linear-gradient(to bottom, 
+                    rgba(0, 0, 0, 0.4) 0%,
+                    var(--base-color) 100%);
+            background-size: 
+                var(--texture-size) var(--texture-size),
+                var(--texture-size) var(--texture-size),
+                100% 100%,
+                100% 100%;
+            background-position: 
+                0 0, 
+                calc(var(--texture-size) / 2) calc(var(--texture-size) / 2),
+                0 0,
+                0 0;
+            animation: subtleShift 120s linear infinite;
+            color: var(--contrast-color);
+            font-family: 'DM Sans', Arial, sans-serif;
+            font-size: clamp(0.875rem, 0.875rem + ((1vw - 0.2rem) * 0.373), 1.08rem);
+            line-height: 1.6;
+            margin: 0;
+            padding-top: 2rem;
+            padding-right: 1.5rem;
+            padding-bottom: 2rem;
+            padding-left: 1.5rem;
+        }
+
+        .skip-link {
+            position: fixed;
+            top: -100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--contrast-color);
+            color: var(--base-color);
+            padding: 0.75rem 1.5rem;
+            z-index: 100;
+            transition: top 0.2s ease-out, outline-offset 0.2s ease;
+            border-radius: 0 0 4px 4px;
+            font-weight: 600;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .skip-link:focus {
+            top: 0;
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: #0093cd;
+            text-decoration: none;
+        }
+
+        a:focus {
+            color: var(--tertiary-color);
+            text-decoration: underline dashed;
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+        
+        .visually-hidden {
+            border: 0;
+            clip: rect(0 0 0 0);
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: 1px;
+        }
+
+        a:active {
+            color: var(--tertiary-color);
+            text-decoration: none;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--contrast-color);
+            font-family: 'Open Sans', sans-serif;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        h1 {
+            font-size: clamp(1.648rem, 1.648rem + ((1vw - 0.2rem) * 2.095), 2.8rem);
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: clamp(1.428rem, 1.428rem + ((1vw - 0.2rem) * 1.676), 2.35rem);
+            line-height: 1.2;
+        }
+
+        h3 {
+            font-size: clamp(1.327rem, 1.327rem + ((1vw - 0.2rem) * 1.496), 2.15rem);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .site-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .site-logo {
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .site-logo img {
+            max-width: 240px;
+            height: auto;
+            max-height: 60px;
+            width: auto;
+            vertical-align: middle;
+        }
+
+        .site-navigation {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+            gap: 0.5rem;
+        }
+
+        .site-navigation a {
+            margin-right: 1.5rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        
+        .site-navigation a:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .site-navigation a:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px var(--focus-ring-color);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+        
+        .main-content:focus {
+            outline: none;
+        }
+
+        .post-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .post-meta {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            margin: 0.5rem 0 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .post-meta-label {
+        }
+
+        .post-meta > *:first-child {
+            margin-top: 0;
+        }
+
+        .post-date, .post-author {
+
+        .post-date, .post-author {
+            font-weight: 500;
+            margin: 0;
+        }
+
+        .post-content {
+            margin-bottom: 2rem;
+        }
+
+        .post-content img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        figure {
+            margin: 1.5rem 0;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 4px;
+        }
+
+        figcaption {
+            margin-top: 0.75rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+        }
+
+        .post-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+            padding: 1rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .post-navigation-prev,
+        .post-navigation-next {
+            max-width: 45%;
+        }
+
+        .post-navigation-next {
+            text-align: right;
+        }
+
+        .post-navigation a {
+            display: inline-block;
+            font-weight: 500;
+            transition: transform 0.2s ease;
+        }
+
+        .post-navigation a:hover {
+            transform: translateX(0.25rem);
+        }
+
+        .post-navigation-prev a:hover {
+            transform: translateX(-0.25rem);
+        }
+
+        .post-categories {
+            font-size: 0.9rem;
+            margin: 1.5rem 0;
+            opacity: 0.8;
+        }
+
+        .sidebar {
+            padding: 0.9em 0;
+        }
+
+        .sidebar-widget {
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-widget h3 {
+            margin-top: 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .search-form {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .search-form input {
+            flex: 1;
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--contrast-color);
+            border-radius: 4px;
+        }
+
+        .search-form input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .search-form input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px var(--focus-ring-color);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .search-form button {
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: var(--contrast-color);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            justify-content: center;
+        }
+
+        .search-form button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-form button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-list, .archive-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .category-list li, .archive-list li {
+            margin-bottom: 0.75rem;
+            padding: 0.25rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .category-list li:last-child, .archive-list li:last-child {
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+
+        .category-list a, .archive-list a {
+            transition: color 0.2s ease, padding-left 0.2s ease;
+            display: inline-block;
+        }
+
+        .category-list a:hover, .archive-list a:hover {
+            padding-left: 0.5rem;
+        }
+
+        .site-footer {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            border-top: 2px solid var(--primary-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .site-footer p {
+            margin: 0;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .container {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+            
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                margin-top: 2rem;
+            }
+            
+            .post-navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .post-navigation-prev,
+            .post-navigation-next {
+                max-width: 100%;
+            }
+            
+            .post-navigation a:hover,
+            .post-navigation-prev a:hover {
+                transform: none;
+                color: var(--tertiary-color);
+            }
+            /* Navigation styles for mobile */
+            .site-navigation {
+                justify-content: center;
+            }
+            
+            .site-navigation a {
+                margin-right: 0;
+                padding: 0.5rem 0.75rem;
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 4px;
+                flex-basis: calc(50% - 0.5rem);
+                text-align: center;
+            }
+
+            .site-footer {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .post-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.25rem;
+            }
+
+            .post-meta-label {
+                margin-top: 0.5rem;
+            }
+
+            .post-meta-label:first-child {
+                margin-top: 0;
+            }
+            
+            .sidebar-widget {
+                margin-bottom: 2.5rem;
+                padding: 1.5rem;
+                background: rgba(255, 255, 255, 0.03);
+                border-radius: 8px;
+            }
+
+            .sidebar-widget:last-child {
+                margin-bottom: 0;
+            }
+        }
+        
+        /* Print styles */
+        @keyframes subtleShift {
+            0% {
+                background-position: 
+                    0 0, 
+                    calc(var(--texture-size) / 2) calc(var(--texture-size) / 2),
+                    0 0,
+                    0 0;
+            }
+            100% {
+                background-position: 
+                    calc(var(--texture-size) * 2) calc(var(--texture-size) * 2), 
+                    calc(var(--texture-size) * 2.5) calc(var(--texture-size) * 2.5),
+                    0 0,
+                    0 0;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            body {
+                animation: none;
+            }
+        }
+        
+        /* Print styles */
+            body {
+                background: white;
+                background-image: none; /* Remove texture for printing */
+                animation: none;
+                color: black;
+                font-size: 12pt;
+                padding: 0;
+            }
+            
+            .skip-link, .site-navigation, .sidebar, .site-footer, .post-navigation {
+                display: none;
+            }
+            
+            .main-content {
+                display: block;
+                width: 100%;
+            }
+            
+            a {
+                color: black;
+                text-decoration: underline;
+            }
+            
+            h1, h2, h3, h4, h5, h6 {
+                color: black;
+                page-break-after: avoid;
+            }
+            
+            img {
+                max-width: 100% !important;
+            }
+            
+            p, h2, h3 {
+                orphans: 3;
+                widows: 3;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <div class="container">
+        <header class="site-header">
+            <div class="site-logo">
+                <a href="/" aria-label="Go to homepage">
+                    <!-- SITE_LOGO_IMAGE -->
+                    <img src="logo.png" alt="<!-- SITE_NAME --> Logo">
+                </a>
+            </div>
+            <nav class="site-navigation" role="navigation" aria-label="Main navigation">
+                <!-- SITE_NAVIGATION -->
+                <a href="/" aria-label="Home page">Home</a>
+                <a href="/about" aria-label="About page">About</a>
+                <a href="/blog" aria-label="Blog page">Blog</a>
+                <a href="/contact" aria-label="Contact page">Contact</a>
+                <a href="/support" aria-label="Support page">Support</a>
+            </nav>
+        </header>
+
+        <main class="main-content" id="main-content" tabindex="-1" role="main">
+            <article class="post">
+                <header class="post-header">
+                    <h1><!-- POST_TITLE --></h1>
+                    <div class="post-meta">
+                        <span class="post-meta-label">Posted</span>
+                        <time class="post-date" datetime="<!-- POST_DATE_ISO -->"><!-- POST_DATE --></time>
+                        <span class="post-meta-label">by</span>
+                        <a class="post-author" href="/author/<!-- AUTHOR_SLUG -->"><!-- AUTHOR_NAME --></a>
+                    </div>
+                </header>
+
+                <div class="post-content">
+                    <!-- POST_CONTENT -->
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu risus a dui varius congue.</p>
+                    
+                    <h3>Section Title</h3>
+                    <p>Suspendisse potenti. Donec vitae semper odio, vel vulputate sapien. Aenean tempor magna vitae nisl facilisis fringilla.</p>
+                    
+                    <figure>
+                        <img src="image.jpg" alt="Description">
+                        <figcaption>Image caption</figcaption>
+                    </figure>
+                    
+                    <ul>
+                        <li>List item one</li>
+                        <li>List item two</li>
+                        <li>List item three</li>
+                    </ul>
+                </div>
+
+                <div class="post-navigation">
+                    <div class="post-navigation-prev">
+                        <a href="<!-- PREV_POST_URL -->">← <!-- PREV_POST_TITLE --></a>
+                    </div>
+                    <div class="post-navigation-next">
+                        <a href="<!-- NEXT_POST_URL -->"><!-- NEXT_POST_TITLE --> →</a>
+                    </div>
+                </div>
+
+                <div class="post-categories">
+                    in <a href="<!-- CATEGORY_URL -->"><!-- CATEGORY_NAME --></a>
+                </div>
+            </article>
+
+            <aside class="sidebar" role="complementary" aria-label="Sidebar">
+                <div class="sidebar-widget search-widget">
+                    <form role="search" method="get" action="/" class="search-form">
+                        <label for="search-input" class="visually-hidden">Search</label>
+                        <input type="search" id="search-input" placeholder="Search..." value="" name="s">
+                        <button type="submit" aria-label="Search">
+                            <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" style="margin-right: 6px;">
+                                <path fill="currentColor" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                            </svg>
+                            <span>Search</span>
+                        </button>
+                    </form>
+                </div>
+
+                <div class="sidebar-widget categories-widget">
+                    <h3>Categories</h3>
+                    <ul class="category-list">
+                        <!-- CATEGORY_LIST -->
+                        <li><a href="/category/category1">Category 1</a> (10)</li>
+                        <li><a href="/category/category2">Category 2</a> (15)</li>
+                        <li><a href="/category/category3">Category 3</a> (8)</li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-widget archives-widget">
+                    <h3>Archives</h3>
+                    <ul class="archive-list">
+                        <!-- ARCHIVE_LIST -->
+                        <li><a href="/2025">2025</a> (4)</li>
+                        <li><a href="/2024">2024</a> (19)</li>
+                        <li><a href="/2023">2023</a> (12)</li>
+                    </ul>
+                </div>
+            </aside>
+        </main>
+
+        <footer class="site-footer">
+            <p class="site-title"><a href="/"><!-- SITE_NAME --></a></p>
+            <p><!-- FOOTER_TEXT --> &copy; <span id="current-year">2025</span></p>
+        </footer>
+    </div>
+    
+    <!-- Scripts -->
+    <script>
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
+
