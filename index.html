@@ -1,120 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Kat Blog</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="logo2.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Game-Name Devlog</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <a href="#main-content" class="skip-link">Skip to content</a>
-    <div class="container">
-        <header class="site-header">
-            <div class="site-logo">
-                <a href="/" aria-label="Go to homepage">
-                    <!-- SITE_LOGO_IMAGE -->
-                    <img src="logo.png" alt="<!-- SITE_NAME --> Logo">
-                </a>
-            </div>
-            <nav class="site-navigation" role="navigation" aria-label="Main navigation">
-                <!-- SITE_NAVIGATION -->
-                <a href="/coolkat" aria-label="Home page">Home</a>
-                <a href="/coolkat/About" aria-label="About page">About</a>
-                <a href="https://github.com/JulianTerB" aria-label="Contact page">Contact</a>
-            </nav>
-        </header>
+  <header>
+    <h1>Game-Name <span class="accent">Devlog</span></h1>
+  </header>
 
-        <main class="main-content" id="main-content" tabindex="-1" role="main">
-            <article class="post">
-                <header class="post-header">
-                    <h1><!-- POST_TITLE --></h1>
-                    <div class="post-meta">
-<span class="post-meta-label">Posted</span>&nbsp;<span class="post-meta-label">by</span>&nbsp;<a class="post-author" href="https://github.com/JulianTerB">JulianTerB</a>
+  <main id="log-list">
+    <!-- JavaScript vult hier de logs in -->
+  </main>
 
+  <script>
+    // **Mapping**: bestandsnaam → leesbare titel
+    const titleMap = {
+      '1.html': 'Wereld Update',
+      '2.html': 'Nieuwe Vijanden',
+      // voeg hier meer mappings toe!
+    };
 
-                    </div>
-                </header>
-
-                <div class="post-content">
-                    <!-- POST_CONTENT -->
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu risus a dui varius congue.</p>
-                    
-                    <h3>Section Title</h3>
-                    <p>Suspendisse potenti. Donec vitae semper odio, vel vulputate sapien. Aenean tempor magna vitae nisl facilisis fringilla.</p>
-                    
-                    <figure>
-                        <img src="image.jpg" alt="Description">
-                        <figcaption>Image caption</figcaption>
-                    </figure>
-                    
-                    <ul>
-                        <li>List item one</li>
-                        <li>List item two</li>
-                        <li>List item three</li>
-                    </ul>
-                </div>
-
-                <div class="post-navigation">
-                    <div class="post-navigation-prev">
-                        <a href="<!-- PREV_POST_URL -->">← <!-- PREV_POST_TITLE --></a>
-                    </div>
-                    <div class="post-navigation-next">
-                        <a href="<!-- NEXT_POST_URL -->"><!-- NEXT_POST_TITLE --> →</a>
-                    </div>
-                </div>
-
-                <div class="post-categories">
-                    <a href="<!-- CATEGORY_URL -->"><!-- CATEGORY_NAME --></a>
-                </div>
-            </article>
-
-            <aside class="sidebar" role="complementary" aria-label="Sidebar">
-                <div class="sidebar-widget search-widget">
-                    <form role="search" method="get" action="/" class="search-form">
-                        <label for="search-input" class="visually-hidden">Search</label>
-                        <input type="search" id="search-input" placeholder="Search..." value="" name="s">
-                        <button type="submit" aria-label="Search">
-                            <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" style="margin-right: 6px;">
-                                <path fill="currentColor" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                            </svg>
-                            <span>Search</span>
-                        </button>
-                    </form>
-                </div>
-
-                <div class="sidebar-widget categories-widget">
-                    <h3>Categories</h3>
-                    <ul class="category-list">
-                        <!-- CATEGORY_LIST -->
-                        <li><a href="/category/category1">Category 1</a> (10)</li>
-                        <li><a href="/category/category2">Category 2</a> (15)</li>
-                        <li><a href="/category/category3">Category 3</a> (8)</li>
-                    </ul>
-                </div>
-
-                <div class="sidebar-widget archives-widget">
-                    <h3>Archives</h3>
-                    <ul class="archive-list">
-                        <!-- ARCHIVE_LIST -->
-                        <li><a href="/2025">2025</a> (4)</li>
-                        <li><a href="/2024">2024</a> (19)</li>
-                        <li><a href="/2023">2023</a> (12)</li>
-                    </ul>
-                </div>
-            </aside>
-        </main>
-
-        <footer class="site-footer">
-            <p class="site-title"><a href="/"><!-- SITE_NAME --></a></p>
-            <p><!-- FOOTER_TEXT --> &copy; <span id="current-year">2025</span></p>
-        </footer>
-    </div>
-    
-    <!-- Scripts -->
-    <script src="scripts.js"></script>
+    // Haal JSON op en render de links
+    fetch('list.php')
+      .then(res => res.json())
+      .then(files => {
+        const container = document.getElementById('log-list');
+        if (!files.length) {
+          container.innerHTML = '<p>Geen logs gevonden.</p>';
+          return;
+        }
+        files.forEach(file => {
+          const title = titleMap[file] || file;
+          const link = document.createElement('a');
+          link.href = `posts/${file}`;
+          link.className = 'log-link';
+          link.textContent = title;
+          container.appendChild(link);
+        });
+      })
+      .catch(err => {
+        console.error('Fout bij ophalen:', err);
+        document.getElementById('log-list')
+          .innerHTML = '<p>Kon de logs niet laden.</p>';
+      });
+  </script>
 </body>
 </html>
