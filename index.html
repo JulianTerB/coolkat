@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Under Construction</title>
   <style>
+    @font-face {
+      font-family: 'SHPinscher';
+      src: url('SHPinscher-Regular.otf') format('opentype');
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -14,18 +19,23 @@
     html, body {
       height: 100%;
       background-color: #0f0f0f;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'SHPinscher', 'Segoe UI', Tahoma, sans-serif;
       color: white;
       overflow: hidden;
+    }
+
+    body.default-cursor {
+      cursor: url("Cursor_Default.png"), auto;
+    }
+
+    body.pressed-cursor {
+      cursor: url("Cursor_Press.png"), auto;
     }
 
     .container {
       position: relative;
       width: 100%;
       height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       text-align: center;
       z-index: 1;
     }
@@ -35,7 +45,6 @@
       top: 10%;
       left: 50%;
       transform: translateX(-50%);
-      width: auto;
       height: 70%;
       image-rendering: pixelated;
       z-index: 0;
@@ -44,10 +53,43 @@
     }
 
     .text {
-      font-size: 2.5rem;
-      font-weight: bold;
-      z-index: 2;
-      backdrop-filter: blur(2px);
+  position: relative;
+  top: 40%;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: bold;
+  z-index: 2;
+  backdrop-filter: blur(2px);
+  padding: 0 1rem;
+}
+
+.boxes {
+  position: absolute;
+  top: calc(40% + 6rem); /* zorg dat het onder de tekst blijft, maar flexibel */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(10px, 2vw, 20px);
+  z-index: 2;
+  padding: 1rem;
+  width: 100%;
+  max-width: 100vw;
+}
+
+.box {
+  width: clamp(150px, 25vw, 270px);
+  aspect-ratio: 2 / 1.35; /* zorgt voor behouden verhouding */
+  background-color: rgba(0, 0, 0, 0.154);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  backdrop-filter: blur(2px);
+  transition: background 0.1s ease;
+}
+
+
+    .box:hover {
+      background-color: rgba(255, 217, 3, 0.109);
     }
 
     .github-link {
@@ -58,41 +100,107 @@
     }
 
     .github-link svg {
-      fill: white;
-      width: 30px;
-      height: 30px;
+      fill: #dfb93c33;
+      width: 50px;
+      height: 50px;
       transition: transform 0.2s ease;
     }
 
     .github-link:hover svg {
       transform: scale(1.1);
     }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.5;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(1px);
+    }
   </style>
 </head>
-<body>
+<body class="default-cursor">
   <div class="container">
-    <img class="background-image" src="your-pixel-art.png" alt="Pixel Art Background" id="pixel-image" />
+    <img class="background-image" src="your-pixel-art.png" alt="Pixel Art Background" />
+
     <div class="text">
-      Sorry,<br>deze pagina is nog in aanbouw.
+      Sorry,<br>This project is still in closed development
     </div>
+
+    <div class="boxes">
+      <div class="box"></div>
+      <div class="box"></div>
+      <div class="box"></div>
+    </div>
+
     <a class="github-link" href="https://github.com/JulianTerB" target="_blank" aria-label="GitHub">
-      <!-- GitHub icon SVG -->
       <svg viewBox="0 0 16 16" version="1.1" aria-hidden="true">
         <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 
-        2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 
-        0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52
-        -.01-.53.63-.01 1.08.58 1.23.82.72 1.21
-        1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78
-        -.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82
-        -2.15-.08-.2-.36-1.02.08-2.12 0 0 .67
-        -.21 2.2.82a7.65 7.65 0 012 0c1.53-1.04
-        2.2-.82 2.2-.82.44 1.1.16 1.92.08 
-        2.12.51.56.82 1.27.82 2.15 0 3.07
-        -1.87 3.75-3.65 3.95.29.25.54.73.54 
-        1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55
-        .38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+          2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 
+          0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52
+          -.01-.53.63-.01 1.08.58 1.23.82.72 1.21
+          1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78
+          -.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82
+          -2.15-.08-.2-.36-1.02.08-2.12 0 0 .67
+          -.21 2.2.82a7.65 7.65 0 012 0c1.53-1.04
+          2.2-.82 2.2-.82.44 1.1.16 1.92.08 
+          2.12.51.56.82 1.27.82 2.15 0 3.07
+          -1.87 3.75-3.65 3.95.29.25.54.73.54 
+          1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55
+          .38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
       </svg>
     </a>
   </div>
+
+  <script>
+    const body = document.body;
+    const amount = 1400;
+
+    // Dust particles
+    for (let i = 0; i < amount; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      body.appendChild(particle);
+      animateParticle(particle);
+    }
+
+    function animateParticle(p) {
+      const startX = Math.random() * window.innerWidth;
+      const startY = Math.random() * window.innerHeight;
+      const duration = 5000 + Math.random() * 5000;
+      const deltaX = -100 + Math.random() * 200;
+      const deltaY = -200 + Math.random() * 100;
+
+      p.style.left = startX + 'px';
+      p.style.top = startY + 'px';
+
+      p.animate([
+        { transform: 'translate(0, 0)', opacity: 0.07 },
+        { transform: `translate(${deltaX}px, ${deltaY}px)`, opacity: 0 }
+      ], {
+        duration: duration,
+        iterations: Infinity
+      });
+    }
+
+    // Cursor toggle
+    window.addEventListener('mousedown', () => {
+      body.classList.remove('default-cursor');
+      body.classList.add('pressed-cursor');
+    });
+
+    window.addEventListener('mouseup', () => {
+      body.classList.remove('pressed-cursor');
+      body.classList.add('default-cursor');
+    });
+
+    window.addEventListener('load', () => {
+      body.classList.add('default-cursor');
+    });
+  </script>
 </body>
 </html>
