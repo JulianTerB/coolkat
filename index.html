@@ -1,51 +1,25 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Game-Name Devlog</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Julian's VSCode Blog</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <h1>Game-Name <span class="accent">Devlog</span></h1>
-  </header>
-
-  <main id="log-list">
-    <!-- JavaScript vult hier de logs in -->
-  </main>
-
-  <script>
-    // **Mapping**: bestandsnaam → leesbare titel
-    const titleMap = {
-      '1.html': 'Wereld Update',
-      '2.html': 'Nieuwe Vijanden',
-      // voeg hier meer mappings toe!
-    };
-
-    // Haal JSON op en render de links
-    fetch('list.php')
-      .then(res => res.json())
-      .then(files => {
-        const container = document.getElementById('log-list');
-        if (!files.length) {
-          container.innerHTML = '<p>Geen logs gevonden.</p>';
-          return;
-        }
-        files.forEach(file => {
-          const title = titleMap[file] || file;
-          const link = document.createElement('a');
-          link.href = `posts/${file}`;
-          link.className = 'log-link';
-          link.textContent = title;
-          container.appendChild(link);
-        });
-      })
-      .catch(err => {
-        console.error('Fout bij ophalen:', err);
-        document.getElementById('log-list')
-          .innerHTML = '<p>Kon de logs niet laden.</p>';
-      });
-  </script>
+  <div class="container">
+    <aside class="explorer">
+      <h2>📁 Blogposts</h2>
+      <ul id="post-list">
+        <li data-post="post1.md">📄 Eerste Post</li>
+        <li data-post="post2.md">📄 Tweede Post</li>
+      </ul>
+    </aside>
+    <main class="editor">
+      <div id="post-content">Selecteer een post om te bekijken.</div>
+    </main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
